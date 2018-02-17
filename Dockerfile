@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.7
 
 RUN apk add --update openldap openldap-back-mdb && \
     rm -rf /var/cache/apk/*
@@ -15,11 +15,10 @@ ENV LOG_LEVEL "stats"
 
 COPY scripts/* /etc/openldap/
 
-EXPOSE 636
-EXPOSE 389
+EXPOSE 389 636
 
-VOLUME ["/ldif"]
-VOLUME ["/var/lib/openldap/openldap-data"]
+VOLUME ["/ldif", "/var/lib/openldap/openldap-data"]
 
 COPY docker-entrypoint.sh /
+
 ENTRYPOINT ["/docker-entrypoint.sh"]

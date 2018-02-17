@@ -81,6 +81,13 @@ for l in /ldif/*; do
   esac
 done
 
+RUNDIR="/run/openldap"
+if [ ! -d $RUNDIR ]; then
+  echo "Create openldap run directory"
+  mkdir -p $RUNDIR
+  chown -R ldap: $RUNDIR
+fi
+
 if [ "$LDAPS" = true ]; then
   echo "Starting LDAPS"
   slapd -d "$LOG_LEVEL" -h "ldaps:///"
